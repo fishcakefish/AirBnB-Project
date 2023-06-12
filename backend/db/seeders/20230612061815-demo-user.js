@@ -23,22 +23,16 @@ module.exports = {
     {
       email: 'random@gmail.com',
       username: 'NPC',
-      firstName: 'rando',
-      lastName: 'one',
       hashedPassword: bcrypt.hashSync('password')
     },
     {
       email: 'random2@gmail.com',
       username: 'NPC2',
-      firstName: 'rando',
-      lastName: 'two',
       hashedPassword: bcrypt.hashSync('password2')
     },
     {
       email: 'random3@gmail.com',
       username: 'NPC3',
-      firstName: 'rando',
-      lastName: 'three',
       hashedPassword: bcrypt.hashSync('password3')
     }
    ], {})
