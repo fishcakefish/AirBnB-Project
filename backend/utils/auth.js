@@ -70,4 +70,6 @@ const requireAuth = function (req, res, next) {
     return next(err)
 }
 
+//hello
+
 module.exports = { setTokenCookie, restoreUser, requireAuth }
