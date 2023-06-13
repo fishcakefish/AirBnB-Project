@@ -34,12 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     firstName: {
-      type: DataTypes.STRING(20),
-      allowNull: false
+      type: DataTypes.STRING(20)
     },
     lastName: {
-      type: DataTypes.STRING(20),
-      allowNull: false
+      type: DataTypes.STRING(20)
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
