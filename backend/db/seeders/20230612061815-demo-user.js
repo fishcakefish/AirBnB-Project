@@ -9,15 +9,6 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
    options.tableName = 'Users'
    queryInterface.bulkInsert(options, [
     {
@@ -40,21 +31,22 @@ module.exports = {
       firstName: 'rando',
       lastName: 'three',
       hashedPassword: bcrypt.hashSync('password')
+    },
+    {
+      email: 'random4@gmail.com',
+      username: 'NPC4',
+      firstName: 'rando',
+      lastName: 'four',
+      hashedPassword: bcrypt.hashSync('password')
     }
    ], {})
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     options.tableName = 'Users'
     const Op = Sequelize.Op
     queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['NPC', 'NPC2', 'NPC3'] }
+      username: { [Op.in]: ['NPC', 'NPC2', 'NPC3', 'NPC4'] }
     }, {})
   }
 };
