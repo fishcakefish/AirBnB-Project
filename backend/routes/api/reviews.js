@@ -39,17 +39,17 @@ router.get('/myreviews', async(req, res) => {
 router.delete('/:id', async(req, res, next) => {
     const review = await Review.findByPk(req.params.id)
     if (!review) {
-        const err = new Error("Spot not found")
+        const err = new Error("Review not found")
         err.status = 404
         return next(err)
     }
     const { user } = req
     if (!user) return res.json({ user: null })
     if (review.userId === user.id) {
-        review.destroy()
+        await review.destroy()
         return res.json('Successful deletion.')
     } else {
-        return res.json('You must be the owner of the given spot.')
+        return res.json('You must be the owner of the given review.')
     }
 })
 

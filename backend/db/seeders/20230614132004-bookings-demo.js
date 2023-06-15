@@ -8,19 +8,27 @@ if (process.env.NODE_ENV === 'production') options.schema = process.env.SCHEMA
 const bookings = [
   {
     address: "456 Disney Lane",
-    ownerEmail: "random1@gmail.com"
+    ownerEmail: "random1@gmail.com",
+    startDate: new Date('2023-1-17'),
+    endDate: new Date('2023-1-20')
   },
   {
     address: "789 Disney Lane",
-    ownerEmail: "random3@gmail.com"
+    ownerEmail: "random3@gmail.com",
+    startDate: new Date('2023-6-15'),
+    endDate: new Date('2023-7-10')
   },
   {
     address: "123 Disney Lane",
-    ownerEmail: "random2@gmail.com"
+    ownerEmail: "random2@gmail.com",
+    startDate: new Date('2023-9-10'),
+    endDate: new Date('2023-9-13')
   },
   {
     address: "456 Disney Lane",
-    ownerEmail: "random4@gmail.com"
+    ownerEmail: "random4@gmail.com",
+    startDate: new Date('2024-2-3'),
+    endDate: new Date('2024-5-3')
   }
 ]
 

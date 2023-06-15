@@ -82,7 +82,7 @@ router.delete('/:id', async(req, res, next) => {
     const { user } = req
     if (!user) return res.json({ user: null })
     if (spot.ownerId === user.id) {
-        spot.destroy()
+        await spot.destroy()
         return res.json('Successful deletion.')
     } else {
         return res.json('You must be the owner of the given spot.')
