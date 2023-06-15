@@ -121,6 +121,8 @@ router.get('/:id', async(req, res, next) => {
         avgStarRating = totalStars / numReviews
     }
 
+    delete spot.Reviews
+
     return res.json({
         spot,
         numReviews,
