@@ -4,7 +4,7 @@ const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth')
-const { Spot, Review, ReviewImage, SpotImage, User } = require('../../db/models')
+const { Spot, Review, ReviewImage, SpotImage, User, Booking } = require('../../db/models')
 
 
 const router = express.Router()
@@ -32,6 +32,44 @@ router.get('/:id/reviews', async(req, res, next) => {
     })
 
     res.json(spot)
+})
+
+router.get('/:id/bookings', async(req, res, next) => {
+    if (!(await Spot.findByPk(req.params.id))) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    let bookings;
+    let check = await Spot.findOne({
+        where: {
+            id: req.params.id,
+            ownerId: user.id
+        }
+    })
+
+    if (check) {
+        bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.id
+            },
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+    })} else {
+        bookings = await Booking.findAll({
+            where: {
+                spotId: req.params.id
+            },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+    }
+
+    res.json(bookings)
 })
 
 router.get('/:id', async(req, res, next) => {
