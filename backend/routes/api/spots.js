@@ -5,7 +5,6 @@ const { handleValidationErrors } = require('../../utils/validation')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth')
 const { Spot, Review, ReviewImage, SpotImage, User } = require('../../db/models')
-const spot = require('../../db/models/spot')
 
 
 const router = express.Router()
