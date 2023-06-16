@@ -326,28 +326,40 @@ router.get('/:id', async(req, res, next) => {
 
 router.get('/', async(req, res) => {
     const spots = await Spot.findAll({
-        include: {
+        include: [{
             model: Review,
             attributes: ['stars']
-        }
+        },
+        {
+            model: SpotImage
+        }]
     })
 
-    let spotsJSON = spots.map(spot => {
-        const spotData = spot.toJSON();
-
-        let avgRating = 0;
-        if (spotData.Reviews.length > 0) {
-            const totalStars = spotData.Reviews.reduce((sum, review) => sum + review.stars, 0);
-            avgRating = totalStars / spotData.Reviews.length;
+    const betterSpot = spots.map(spot => {
+        spot = spot.toJSON()
+        let averageRating = 0;
+        let totalRatings = 0;
+        for (let i = 0; i < spot.Reviews.length; i++) {
+            const rating = spot.Reviews[i].stars
+            averageRating += rating
+            totalRatings++
         }
+        if (totalRatings > 0) {
+            average = averageRating / totalRatings
+            spot.avgRating = average.toFixed(2)
+        }
+        else spot.avgRating = 0
 
-        delete spotData.Reviews;
-        spotData.avgRating = avgRating;
+        spot.previewImages = spot.SpotImages.map(image => {
+            return [image.url, image.preview]
+        })
 
-        return spotData;
+        delete spot.Reviews
+        delete spot.SpotImages
+        return spot
     })
 
-    return res.json(spotsJSON)
+    return res.json(betterSpot)
 })
 
 router.post('/', validateSpot, async(req, res) => {
