@@ -10,7 +10,6 @@ const router = express.Router()
 
 router.delete('/:id', async(req, res, next) => {
     const booking = await Booking.findByPk(req.params.id)
-    console.log(booking.startDate)
     if (!booking) {
         const err = new Error("Booking not found")
         err.status = 404

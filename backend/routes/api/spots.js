@@ -73,6 +73,53 @@ router.get('/:id/reviews', async(req, res, next) => {
     res.json(spot)
 })
 
+router.post('/:id/bookings', async(req, res, next) => {
+    const spot = await Spot.findByPk(req.params.id, {
+        include: {
+            model: Booking,
+            attributes: ['startDate', 'endDate']
+        }
+    })
+    if (!spot) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    if (spot.ownerId === user.id) {
+        return res.json("You can't make a booking to your own spot.")
+    }
+
+    const { startDate, endDate } = req.body
+    const newStartDate = new Date(startDate)
+    const newEndDate = new Date(endDate)
+
+    console.log(newStartDate)
+
+    for (let i = 0; i < spot.Bookings.length; i++) {
+        let booking = spot.Bookings[i]
+        console.log(booking.startDate)
+        let currentStartDate = new Date(booking.startDate)
+        let currentEndDate = new Date(booking.endDate)
+        if ((newStartDate >= currentStartDate && newStartDate <= currentEndDate) ||
+            (newEndDate >= currentStartDate && newEndDate <= currentEndDate)) {
+            const err = new Error("Booking for this timeslot already exists.")
+            err.status = 403
+            return next(err)
+        }
+    }
+
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: user.id,
+        startDate: newStartDate,
+        endDate: newEndDate
+    })
+
+    res.json(newBooking)
+})
+
 router.get('/:id/bookings', async(req, res, next) => {
     if (!(await Spot.findByPk(req.params.id))) {
         const err = new Error("Spot not found")
