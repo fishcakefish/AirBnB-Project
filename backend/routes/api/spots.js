@@ -46,10 +46,53 @@ const validateSpot = [
     handleValidationErrors
 ];
 
+const validateReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Must be a number'),
+    handleValidationErrors
+]
+
 const router = express.Router()
 
-router.get('/:id/reviews', async(req, res, next) => {
+router.post('/:id/reviews', validateReview, async(req, res, next) => {
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    const spot = await Spot.findByPk(req.params.id, {
+        include: {
+            model: Review,
+            attributes: ['userId', 'review']
+        }
+    })
+    if (!spot) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+    for (let i = 0; i < spot.Reviews.length; i++) {
+        console.log(spot.Reviews[i].userId)
+        if (spot.Reviews[i].userId === user.id) {
+            const err = new Error("Review of this spot already exists from you")
+            err.status = 403
+            return next(err)
+        }
+    }
+    const { review, stars } = req.body
+    const newReview = await Review.create({
+        spotId: spot.id,
+        userId: user.id,
+        review,
+        stars
+    })
+    res.json(newReview)
+})
 
+router.get('/:id/reviews', async(req, res, next) => {
     if (!(await Spot.findByPk(req.params.id))) {
         const err = new Error("Spot not found")
         err.status = 404
