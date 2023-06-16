@@ -142,7 +142,6 @@ router.post('/:id/bookings', async(req, res, next) => {
 
     for (let i = 0; i < spot.Bookings.length; i++) {
         let booking = spot.Bookings[i]
-        console.log(booking.startDate)
         let currentStartDate = new Date(booking.startDate)
         let currentEndDate = new Date(booking.endDate)
         if ((newStartDate >= currentStartDate && newStartDate <= currentEndDate) ||
