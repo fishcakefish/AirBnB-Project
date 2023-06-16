@@ -158,6 +158,25 @@ router.get('/:id/bookings', async(req, res, next) => {
     res.json(bookings)
 })
 
+router.post('/:id', async(req, res, next) => {
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    const spot = await Spot.findByPk(req.params.id)
+    if (!spot) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+    if (spot.ownerId !== user.id) return res.json("You must be the owner of the given spot.")
+    const { url, preview } = req.body
+    const newSpotImage = await SpotImage.create({
+        spotId: spot.id,
+        url,
+        preview
+    })
+    res.json(newSpotImage)
+})
+
 router.delete('/:id', async(req, res, next) => {
     const spot = await Spot.findByPk(req.params.id)
     if (!spot) {
