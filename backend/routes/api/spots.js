@@ -128,6 +128,33 @@ router.delete('/:id', async(req, res, next) => {
     }
 })
 
+router.put('/:id', validateSpot, async(req, res, next) => {
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    const spot = await Spot.findByPk(req.params.id)
+    if (!spot) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+    if (spot.ownerId !== user.id) {
+        return res.json('You must be the owner of the given spot.')
+    }
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    await spot.update({
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+    return res.json(spot)
+})
+
 router.get('/:id', async(req, res, next) => {
     let spot = await Spot.findByPk(req.params.id, {
         include: [{
