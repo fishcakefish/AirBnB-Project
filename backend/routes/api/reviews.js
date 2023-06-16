@@ -53,4 +53,34 @@ router.delete('/:id', async(req, res, next) => {
     }
 })
 
+router.post('/:id', async(req, res, next) => {
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    const review = await Review.findByPk(req.params.id)
+    if (!review) {
+        const err = new Error("Review not found")
+        err.status = 404
+        return next(err)
+    }
+    if (review.userId !== user.id) return res.json("You must be the owner of the given review.")
+    const reviewImages = await ReviewImage.findAll({
+        where: {
+            reviewId: review.id
+        },
+        attributes: ['id']
+    })
+    console.log(reviewImages.length)
+    if (reviewImages.length > 10) {
+        const err = new Error("Maximum amount of ReviewImages exceeded.")
+        err.status = 403
+        return next(err)
+    }
+    const { url } = req.body
+    const newReviewImage = await ReviewImage.create({
+        reviewId: review.id,
+        url
+    })
+    return res.json(newReviewImage)
+})
+
 module.exports = router
