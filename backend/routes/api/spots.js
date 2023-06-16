@@ -6,6 +6,45 @@ const { handleValidationErrors } = require('../../utils/validation')
 const { setTokenCookie, requireAuth } = require('../../utils/auth')
 const { Spot, Review, ReviewImage, SpotImage, User, Booking } = require('../../db/models')
 
+const validateSpot = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('city')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('state')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('country')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Must be a number'),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Must be a number'),
+    check('name')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .isString()
+        .withMessage('Must be a string'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .isNumeric()
+        .withMessage('Must be a number'),
+    handleValidationErrors
+];
 
 const router = express.Router()
 
@@ -139,19 +178,15 @@ router.get('/', async(req, res) => {
     })
 
     let spotsJSON = spots.map(spot => {
-        const spotData = spot.toJSON(); // convert the data to a mutable format
+        const spotData = spot.toJSON();
 
-        // calculate the average rating
         let avgRating = 0;
         if (spotData.Reviews.length > 0) {
             const totalStars = spotData.Reviews.reduce((sum, review) => sum + review.stars, 0);
             avgRating = totalStars / spotData.Reviews.length;
         }
 
-        // remove the Reviews
         delete spotData.Reviews;
-
-        // Add avgRating to spotData
         spotData.avgRating = avgRating;
 
         return spotData;
@@ -160,24 +195,23 @@ router.get('/', async(req, res) => {
     return res.json(spotsJSON)
 })
 
-// router.post('/', async(req, res) => {
-//     const { user, address, city, state, country, lat, lng, name, description, price } = req
-//     if (!user) return res.json({ user: null })
-//     else {
-//         const newSpot = await Spot.create({ address, city, state, country, lat, lng, name, description, price })
-//         const safeSpot = {
-//             ownerId: user.id,
-//             address,
-//             city,
-//             state,
-//             country,
-//             lat,
-//             lng,
-//             name,
-//             description,
-//             price
-//         }
-//     }
-// })
+router.post('/', validateSpot, async(req, res) => {
+    const { user } = req
+    const { address, city, state, country, lat, lng, name, description, price } = req.body
+    if (!user) return res.json({ user: null })
+    const newSpot = await Spot.create({
+        ownerId: user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+    return res.json(newSpot)
+})
 
 module.exports = router

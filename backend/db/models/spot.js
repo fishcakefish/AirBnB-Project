@@ -41,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     lng: DataTypes.NUMERIC,
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    price: DataTypes.NUMERIC,
-    avgRating: DataTypes.NUMERIC
+    price: DataTypes.NUMERIC
   }, {
     sequelize,
     modelName: 'Spot',
