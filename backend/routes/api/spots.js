@@ -201,6 +201,20 @@ router.get('/:id/bookings', async(req, res, next) => {
     res.json(bookings)
 })
 
+router.delete('/:id/images/:imageid', async(req, res, next) => {
+    const { user } = req
+    if (!user) return res.json({ user: null })
+    const spot = await Spot.findByPk(req.params.id)
+    if (!spot) {
+        const err = new Error("Spot not found")
+        err.status = 404
+        return next(err)
+    }
+    if (spot.ownerId !== user.id) return res.json("You must own the spot to delete.")
+    await spot.destroy()
+    return res.json("Successful deletion.")
+})
+
 router.post('/:id', async(req, res, next) => {
     const { user } = req
     if (!user) return res.json({ user: null })
