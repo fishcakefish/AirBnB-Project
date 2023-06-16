@@ -211,7 +211,13 @@ router.delete('/:id/images/:imageid', async(req, res, next) => {
         return next(err)
     }
     if (spot.ownerId !== user.id) return res.json("You must own the spot to delete.")
-    await spot.destroy()
+    const spotImage = await SpotImage.findByPk(req.params.id)
+    if (!spotImage) {
+        const err = new Error("SpotImage not found")
+        err.status = 404
+        return next(err)
+    }
+    await spotImage.destroy()
     return res.json("Successful deletion.")
 })
 
