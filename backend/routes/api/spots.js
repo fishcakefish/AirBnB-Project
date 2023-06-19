@@ -1,5 +1,6 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
+const { Op } = require('sequelize')
 const { check } = require('express-validator')
 const { handleValidationErrors } = require('../../utils/validation')
 
@@ -75,6 +76,42 @@ const validateBooking = [
             }
             return true
         }),
+    handleValidationErrors
+]
+
+const validateQuery = [
+    check('page')
+        .optional()
+        .isInt({ min: 1, max: 10 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .optional()
+        .isInt({ min: 1, max: 20 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check("maxLat")
+        .optional()
+        .isNumeric()
+        .withMessage("Maximum latitiude is invalid"),
+    check("minLat")
+        .optional()
+        .isNumeric()
+        .withMessage("Minimum latitiude is invalid"),
+    check("maxLng")
+        .optional()
+        .isNumeric()
+        .withMessage("Maximum longitude is invalid"),
+    check("minLng")
+        .optional()
+        .isNumeric()
+        .withMessage("Minimum longitude is invalid"),
+    check("minPrice")
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
     handleValidationErrors
 ]
 
@@ -389,7 +426,37 @@ router.get('/:id', async(req, res, next) => {
     })
 })
 
-router.get('/', async(req, res) => {
+router.get('/', validateQuery, async(req, res) => {
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+    page = parseInt(page)
+    size = parseInt(size)
+    if (Number.isNaN(page)) page = 1
+    if (Number.isNaN(size)) size = 20
+
+    let where = {}
+    if (minLat) where.lat = {
+        [Op.gte]: minLat
+    }
+    if (maxLat) where.lat = {
+        ...where.lat,
+        [Op.lte]: maxLat
+    }
+    if (minLng) where.lng = {
+        [Op.gte]: minLng
+    }
+    if (maxLng) where.lng = {
+        ...where.lat,
+        [Op.lte]: maxLng
+    }
+    if (minPrice) where.price = {
+        [Op.gte]: minPrice
+    }
+    if (maxPrice) where.price = {
+        ...where.price,
+        [Op.lte]: maxPrice
+    }
+
+
     const spots = await Spot.findAll({
         include: [{
             model: Review,
@@ -397,7 +464,10 @@ router.get('/', async(req, res) => {
         },
         {
             model: SpotImage
-        }]
+        }],
+        where: where,
+        limit: size,
+        offset: size * (page - 1)
     })
 
     const betterSpot = spots.map(spot => {
