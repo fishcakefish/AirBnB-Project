@@ -117,7 +117,7 @@ const validateQuery = [
 
 const router = express.Router()
 
-router.get('/myspots', async(req, res) => {
+router.get('/current', async(req, res) => {
     const { user } = req
     if (!user) return res.json({ user: null })
     const spots = await Spot.findAll({
@@ -322,10 +322,10 @@ router.delete('/:id/images/:imageid', async(req, res, next) => {
     return res.json("Successfully deleted")
 })
 
-router.post('/:id', async(req, res, next) => {
+router.post('/:spotid/images', async(req, res, next) => {
     const { user } = req
     if (!user) return res.json({ user: null })
-    const spot = await Spot.findByPk(req.params.id)
+    const spot = await Spot.findByPk(req.params.spotid)
     if (!spot) {
         const err = new Error("Spot couldn't be found")
         err.status = 404
@@ -486,7 +486,7 @@ router.get('/', validateQuery, async(req, res) => {
         else spot.avgRating = 0
 
         spot.previewImages = spot.SpotImages.map(image => {
-            return image.url
+            if (image.preview === true) return image.url
         })
 
         delete spot.Reviews

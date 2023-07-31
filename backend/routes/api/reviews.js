@@ -57,7 +57,7 @@ router.delete('/:id', async(req, res, next) => {
     }
 })
 
-router.post('/:id', async(req, res, next) => {
+router.post('/:id/images', async(req, res, next) => {
     const { user } = req
     if (!user) return res.json({ user: null })
     const review = await Review.findByPk(req.params.id)
@@ -107,7 +107,7 @@ router.put("/:id", validateReview, async(req, res, next) => {
     return res.json(findReview)
 })
 
-router.get('/', async(req, res) => {
+router.get('/current', async(req, res) => {
     const { user } = req
     if (!user) return res.json({ user: null })
     else {
