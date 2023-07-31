@@ -9,16 +9,19 @@ function Navigation({ isLoaded }){
 
   return (
     <>
-        <ul>
-        <li>
-            <NavLink exact to="/">Home</NavLink>
-        </li>
-        {isLoaded && (
-            <li>
-            <ProfileButton user={sessionUser} />
-            </li>
-        )}
-        </ul>
+        <div className='container'>
+            <div className='header'>
+                <NavLink exact to="/">
+                    <img src="/images/airbnblogo3.png" width="110" height="60" alt="AirBnB Logo" />
+                </NavLink>
+                <ul>
+                    {isLoaded && (
+                        <ProfileButton user={sessionUser} />
+                    )}
+                </ul>
+            </div>
+            <div className='body'>line</div>
+        </div>
     </>
   );
 }

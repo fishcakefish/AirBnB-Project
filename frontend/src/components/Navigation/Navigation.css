@@ -5,3 +5,17 @@
 .profile-dropdown.hidden {
     display: none;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.body {
+    background-color: blue;
+}
