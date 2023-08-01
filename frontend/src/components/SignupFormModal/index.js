@@ -17,6 +17,24 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+    let validationErrors = {};
+
+    if (!emailRegex.test(email)) {
+      validationErrors.email = 'Please provide a valid email.';
+    }
+
+    if (emailRegex.test(username)) {
+      validationErrors.username = 'Username cannot be an email.';
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
     if (password === confirmPassword) {
       setErrors({});
       return dispatch(
@@ -37,7 +55,7 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword: "Confirm Password field must be the same as the Password field.",
     });
   };
 
