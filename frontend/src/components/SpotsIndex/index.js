@@ -19,13 +19,16 @@ function SpotIndex({ isLoaded }){
         <ul>
           {/* <li>{spots[1].previewImages[0]}, rating: {spots[1].avgRating}</li>
           <li>{spots[1].city}, {spots[1].state}</li>
-          <li>${spots[1].price} night</li>
-          {spots.map((spot) => {
-            <SpotIndexItem
-              spot={spot}
-              key={spot.id}
-            />
-          })} */}
+          <li>${spots[1].price} night</li> */}
+          <div className='spot-container'>
+            {spots.map((spot) => (
+              <ul>
+                <li>{spot.previewImages[0]}, rating: {spot.avgRating}</li>
+                <li>{spot.city}, {spot.state}</li>
+                <li>${spot.price} per night</li>
+              </ul>
+            ))}
+          </div>
           hello
         </ul>
     </>
