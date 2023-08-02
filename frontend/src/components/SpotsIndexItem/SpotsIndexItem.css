@@ -13,3 +13,8 @@
 /* .spots-items-container span:hover {
     background-color: yellow;
 } */
+
+.spots-items-container {
+    display: flex;
+    flex-direction: column;
+}

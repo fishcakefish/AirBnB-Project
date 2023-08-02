@@ -1,0 +1,7 @@
+.no-spots-container button{
+    display: block;
+    width: 100%;
+    padding: 14px 28px;
+    font-size: 30px;
+    text-align: center;
+}

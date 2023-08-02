@@ -23,7 +23,6 @@ const SpotShow = () => {
   useEffect(() => {
     if (!spot) {
       dispatch(chooseSpot(spotId))
-      console.log('hi')
     }
   }, [dispatch])
 
