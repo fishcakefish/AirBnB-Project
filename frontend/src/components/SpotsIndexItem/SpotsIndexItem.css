@@ -1,0 +1,15 @@
+/* .spots-items-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+} */
+
+.spots-items-container img {
+    width: 200px;
+    height: 200px;
+}
+
+/* .spots-items-container span:hover {
+    background-color: yellow;
+} */

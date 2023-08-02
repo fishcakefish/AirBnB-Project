@@ -7,7 +7,7 @@ import SpotIndexItem from '../SpotsIndexItem';
 function SpotIndex({ isLoaded }){
   // const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch()
-  const spots = useSelector(state => Object.values(state.spots))
+  const spots = useSelector(state => Object.values(state.spots.allSpots))
   // console.log(spots[1].previewImages[0])
 
   useEffect(() => {
@@ -17,19 +17,23 @@ function SpotIndex({ isLoaded }){
   return (
     <>
         <ul>
-          {/* <li>{spots[1].previewImages[0]}, rating: {spots[1].avgRating}</li>
-          <li>{spots[1].city}, {spots[1].state}</li>
-          <li>${spots[1].price} night</li> */}
-          <div className='spot-container'>
-            {spots.map((spot) => (
+          <div className='spot-containers'>
+            {/* {spots.map((spot) => (
               <ul>
                 <li>{spot.previewImages[0]}, rating: {spot.avgRating}</li>
                 <li>{spot.city}, {spot.state}</li>
                 <li>${spot.price} per night</li>
               </ul>
+            ))} */}
+          </div>
+          <div className='spot-container'>
+            {spots.map((spot) => (
+              <SpotIndexItem
+                spot={spot}
+                key={spot.id}
+              />
             ))}
           </div>
-          hello
         </ul>
     </>
   );
