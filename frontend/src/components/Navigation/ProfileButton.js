@@ -5,6 +5,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import { useHistory, NavLink } from 'react-router-dom'
+import SpotCreate from "../SpotsCreate";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -46,7 +47,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <div className="ggg">
-      <NavLink exact to='/spots/create'>{user && <button>Create a New Spot</button>}</NavLink>
+      <NavLink exact to='/spots/create'>{user && <button>Create new Spot</button>}</NavLink>
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>

@@ -1,14 +1,33 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './SpotsCreate.css'
+import { useDispatch, useSelector } from 'react-redux';
+import { createSpot } from '../../store/spots';
 
 export default function SpotCreate() {
     const history = useHistory()
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.session.user)
     const [country, setCountry] = useState('')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [state, setState] = useState('')
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState(0)
+    const [description, setDescription] = useState('')
+    const [lat, setLat] = useState(1.1234)
+    const [lng, setLng] = useState(-1.1234)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const spot = { address, city, state, country, lat, lng, name, description, price }
+        const newSpot = await dispatch(createSpot(spot, user))
+        // history.push(`/spots/${newSpot.id}`)
+    }
     return (
         <>
             <h1>Create a New Spot</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <section>
                     <h2>Where's your place located?</h2>
                     <div>Guests will only get your exact address once they booked a reservation.</div>
@@ -26,8 +45,8 @@ export default function SpotCreate() {
                         <input
                             type='text'
                             placeholder='address'
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                         />
                     </label>
                     <label>
@@ -35,8 +54,8 @@ export default function SpotCreate() {
                         <input
                             type='text'
                             placeholder='city'
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
                         />
                     </label>
                     <label>
@@ -44,8 +63,8 @@ export default function SpotCreate() {
                         <input
                             type='text'
                             placeholder='state'
-                            value={country}
-                            onChange={(e) => setCountry(e.target.value)}
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
                         />
                     </label>
                 </section>
@@ -54,6 +73,8 @@ export default function SpotCreate() {
                     <div>Mention the best features of your space, any special amenitities like fast wifi or parking, and what you love about the neighborhood.</div>
                     <textarea
                         placeholder='Please write at least 30 characters'
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
                     />
                 </section>
                 <section>
@@ -62,6 +83,8 @@ export default function SpotCreate() {
                     <input
                         type='text'
                         placeholder="Name of your spot"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </section>
                 <section>
@@ -70,6 +93,8 @@ export default function SpotCreate() {
                     <input
                         type='number'
                         placeholder='Price per night (USD)'
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
                     />
                 </section>
                 <section>
@@ -98,27 +123,6 @@ export default function SpotCreate() {
                 </section>
                 <button type="submit">Create Spot</button>
             </form>
-            {/* <form onSubmit={handleSubmit}>
-            <h2>{formType}</h2>
-            <div className="errors">{errors.understanding}</div>
-            <label>
-            Understanding:
-            <input
-                type="text"
-                value={understanding}
-                onChange={(e) => setUnderstanding(e.target.value)}
-            />
-            </label>
-            <div className="errors">{errors.improvement}</div>
-            <label>
-            Improvement:
-            <textarea
-                value={improvement}
-                onChange={(e) => setImprovement(e.target.value)}
-            />
-            </label>
-            <button type="submit">{formType}</button>
-        </form> */}
       </>
     )
 }

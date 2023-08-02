@@ -1,5 +1,8 @@
+import { csrfFetch } from "./csrf"
+
 const GET_ALL_SPOTS = 'spots/getall'
 const RECIEVE_SPOT = 'spots/RECIEVE_SPOT'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 const getAllSpots = (spots) => {
     return {
@@ -11,6 +14,10 @@ const getAllSpots = (spots) => {
 const recieveSpot = (spot) => ({
     type: RECIEVE_SPOT,
     spot
+})
+
+const deleteSpot = (spot) => ({
+    
 })
 
 export const writeSpots = (payload) => async(dispatch) => {
@@ -32,6 +39,25 @@ export const chooseSpot = (spotId) => async(dispatch) => {
         const spot = await response.json()
         dispatch(recieveSpot(spot))
         return spot
+    }
+}
+
+export const createSpot = (spot, user) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spots/`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spot)
+    })
+
+    if (response.ok) {
+        if (!user) throw new Error('Please log in to create a spot')
+        const newSpot = await response.json()
+        dispatch(recieveSpot(newSpot))
+        return newSpot
+    }
+    else {
+        const errors = await response.json()
+        return errors
     }
 }
 
