@@ -4,7 +4,8 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
+import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -44,9 +45,12 @@ function ProfileButton({ user }) {
 
   return (
     <>
+      <div className="ggg">
+      <NavLink exact to='/spots/create'>{user && <button>Create a New Spot</button>}</NavLink>
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
+      </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>

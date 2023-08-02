@@ -16,6 +16,10 @@ const SpotShow = () => {
 
   const { spot } = chosenSpot
 
+  const alerting = () => {
+    alert("Feature coming soon")
+  }
+
   useEffect(() => {
     if (!spot) {
       dispatch(chooseSpot(spotId))
@@ -36,10 +40,18 @@ const SpotShow = () => {
             {/* <td className="attribute">Location:</td> */}
             <td className="value">Location: {spot?.city}, {spot?.state}, {spot?.country}</td>
           </tr>
-          <div>
-            {spot?.SpotImages.map((image) => (
-              <img src={image.url}/>
-            ))}
+          <div className='stuffss'>
+            <div>
+              {spot?.SpotImages.map((image) => (
+                <img src={image.url}/>
+              ))}
+            </div>
+            <div className="callout">
+              <div className="callout-header">${spot?.price} night</div>
+              <div className="callout-container">
+                <button onClick={alerting}>Reserve</button>
+              </div>
+            </div>
           </div>
           <tr>
             {/* <td className="attribute">Hosted By:</td> */}

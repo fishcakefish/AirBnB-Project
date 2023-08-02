@@ -14,11 +14,16 @@ function Navigation({ isLoaded }){
                 <NavLink exact to="/">
                     <img src="/images/airbnblogo3.png" width="110" height="60" alt="AirBnB Logo" />
                 </NavLink>
-                <ul>
-                    {isLoaded && (
-                        <ProfileButton user={sessionUser} />
-                    )}
-                </ul>
+                <div className='subHeader'>
+                    {/* <div className='header-spot-button'>
+                        <button>Create a New Spot</button>
+                    </div> */}
+                    <ul>
+                        {isLoaded && (
+                            <ProfileButton user={sessionUser} />
+                        )}
+                    </ul>
+                </div>
             </div>
             <div className='body'>line</div>
         </div>
