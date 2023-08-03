@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { removeSpot } from '../../store/spots';
+import OpenModalButton from '../OpenModalButton';
+import React, { useState } from 'react'
 import "./SpotsCurrentItem.css";
+import DeleteButton from './DeleteButton';
 
 export default function SpotCurrentItem({ spot }) {
   const dispatch = useDispatch()
@@ -27,8 +29,8 @@ export default function SpotCurrentItem({ spot }) {
                 <div>${spot.price} night</div>
             </Link>
             <div className='button-container'>
-                <button>Update</button>
-                <button>Delete</button>
+                <Link to={`/spots/edit/${spot.id}`}><button>Update</button></Link>
+                <OpenModalButton buttonText='Delete' modalComponent={<DeleteButton spotId={spot.id}/>}/>
             </div>
         </div>
     </>

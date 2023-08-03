@@ -1,32 +1,33 @@
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import './SpotsCreate.css'
+import { useHistory, useParams } from 'react-router-dom';
+import './SpotsEdit.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { createSpot } from '../../store/spots';
+import { editCurrentSpot } from '../../store/spots';
 
-export default function SpotCreate() {
+export default function SpotEdit({ userSpot }) {
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
-    const [country, setCountry] = useState('')
-    const [address, setAddress] = useState('')
-    const [city, setCity] = useState('')
-    const [state, setState] = useState('')
-    const [name, setName] = useState('')
-    const [price, setPrice] = useState(0)
-    const [description, setDescription] = useState('')
-    const [lat, setLat] = useState(1.1234)
-    const [lng, setLng] = useState(-1.1234)
+    console.log(userSpot)
+    const [country, setCountry] = useState(userSpot?.country)
+    const [address, setAddress] = useState(userSpot?.address)
+    const [city, setCity] = useState(userSpot?.city)
+    const [state, setState] = useState(userSpot?.state)
+    const [name, setName] = useState(userSpot?.name)
+    const [price, setPrice] = useState(userSpot?.price)
+    const [description, setDescription] = useState(userSpot?.description)
+    const [lat, setLat] = useState(userSpot?.lat)
+    const [lng, setLng] = useState(userSpot?.lng)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const spot = { address, city, state, country, lat, lng, name, description, price }
-        const newSpot = await dispatch(createSpot(spot, user))
-        history.push(`/spots/${newSpot.id}`)
+        await dispatch(editCurrentSpot(spot, userSpot.id))
+        history.push(`/spots/${userSpot.id}`)
     }
     return (
         <>
-            <h1>Create a New Spot</h1>
+            <h1>Update your Spot</h1>
             <form onSubmit={handleSubmit}>
                 <section>
                     <h2>Where's your place located?</h2>
@@ -121,7 +122,7 @@ export default function SpotCreate() {
                         placeholder='Image URL'
                     />
                 </section>
-                <button type="submit">Create Spot</button>
+                <button type="submit">Update your Spot</button>
             </form>
       </>
     )

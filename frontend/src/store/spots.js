@@ -4,6 +4,7 @@ const GET_ALL_SPOTS = 'spots/getall'
 const RECIEVE_SPOT = 'spots/RECIEVE_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
 const GET_USER_SPOTS = 'spots/GET_USER_SPOTS'
+const EDIT_SPOT = 'spits/EDIT_SPOT'
 
 const getAllSpots = (spots) => ({
     type: GET_ALL_SPOTS,
@@ -23,6 +24,11 @@ const deleteSpot = (spotId) => ({
 const getUserSpots = (spots) => ({
     type: GET_USER_SPOTS,
     spots
+})
+
+const editSpot = (spot) => ({
+    type: EDIT_SPOT,
+    spot
 })
 
 export const writeSpots = (payload) => async(dispatch) => {
@@ -90,6 +96,20 @@ export const getCurrentSpots = () => async(dispatch) => {
     }
 }
 
+export const editCurrentSpot = (spot, spotId) => async(dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spot)
+    })
+
+    if (response.ok) {
+        const spot = await response.json()
+        dispatch(editSpot(spot))
+        return spot
+    }
+}
+
 // export default function spotsReducer(state = {}, action) {
 //     switch (action.type) {
 //         case GET_ALL_SPOTS:
@@ -127,6 +147,10 @@ export default function spotsReducer(state = initialState, action) {
             action.spots.forEach((spot) => {
                 spotsState.allSpots[spot.id] = spot
             })
+            return spotsState
+        case EDIT_SPOT:
+            spotsState = { ...state, allSpots: {}, singleSpot: {} }
+            spotsState.singleSpot = action.spot
             return spotsState
         default:
             return state

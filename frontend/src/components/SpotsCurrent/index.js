@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getCurrentSpots } from '../../store/spots'
 import SpotCurrentItem from '../SpotsCurrentItem'
 import { Link } from 'react-router-dom'
+import { removeSpot } from '../../store/spots'
 
 export default function SpotCurrent() {
     const dispatch = useDispatch()
     const user = useSelector(state => state.session.user)
     const spots = useSelector(state => Object.values(state.spots.allSpots))
-    console.log(spots)
 
     useEffect(() => {
         if (user) {
