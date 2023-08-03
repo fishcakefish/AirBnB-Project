@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './SpotsEdit.css'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { editCurrentSpot } from '../../store/spots';
 
 export default function SpotEdit({ userSpot }) {
     const history = useHistory()
     const dispatch = useDispatch()
-    const user = useSelector(state => state.session.user)
-    console.log(userSpot)
     const [country, setCountry] = useState(userSpot?.country)
     const [address, setAddress] = useState(userSpot?.address)
     const [city, setCity] = useState(userSpot?.city)
@@ -18,12 +16,33 @@ export default function SpotEdit({ userSpot }) {
     const [description, setDescription] = useState(userSpot?.description)
     const [lat, setLat] = useState(userSpot?.lat)
     const [lng, setLng] = useState(userSpot?.lng)
+    const [errors, setErrors] = useState({})
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let validationErrors = {}
+
+        if (!country) validationErrors.country = 'Please provide a valid country'
+        if (!address) validationErrors.address = 'Please provide a valid address'
+        if (!city) validationErrors.city = 'Please provide a valid city'
+        if (!state) validationErrors.state = 'Please provide a valid state'
+        if (!name) validationErrors.name = 'Please provide a valid name'
+        if (name.length >= 50) validationErrors.name = 'Name must be less than 50 characters'
+        if (!price) validationErrors.price = 'Please provide a valid price'
+        if (!description) validationErrors.description = 'Please provide a valid description'
+        if (description.length < 30) validationErrors.description = 'Description needs 30 or more characters'
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors)
+        }
+
         const spot = { address, city, state, country, lat, lng, name, description, price }
-        await dispatch(editCurrentSpot(spot, userSpot.id))
-        history.push(`/spots/${userSpot.id}`)
+        try{
+            await dispatch(editCurrentSpot(spot, userSpot.id))
+            history.push(`/spots/${userSpot.id}`)
+        } catch (error){
+            console.error('Error creating spot:', error)
+        }
     }
     return (
         <>
@@ -41,6 +60,7 @@ export default function SpotEdit({ userSpot }) {
                             onChange={(e) => setCountry(e.target.value)}
                         />
                     </label>
+                    {errors.country && <p>{errors.country}</p>}
                     <label>
                         Street Adress:
                         <input
@@ -50,6 +70,7 @@ export default function SpotEdit({ userSpot }) {
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </label>
+                    {errors.address && <p>{errors.address}</p>}
                     <label>
                         City:
                         <input
@@ -59,6 +80,7 @@ export default function SpotEdit({ userSpot }) {
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </label>
+                    {errors.city && <p>{errors.city}</p>}
                     <label>
                         State:
                         <input
@@ -68,6 +90,7 @@ export default function SpotEdit({ userSpot }) {
                             onChange={(e) => setState(e.target.value)}
                         />
                     </label>
+                    {errors.state && <p>{errors.state}</p>}
                 </section>
                 <section>
                     <h2>Describe your place to guests</h2>
@@ -77,6 +100,7 @@ export default function SpotEdit({ userSpot }) {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                    {errors.description && <p>{errors.description}</p>}
                 </section>
                 <section>
                     <h2>Create a title for your spot</h2>
@@ -87,6 +111,7 @@ export default function SpotEdit({ userSpot }) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
+                    {errors.name && <p>{errors.name}</p>}
                 </section>
                 <section>
                     <h2>Set a base price for your spot</h2>
@@ -97,8 +122,9 @@ export default function SpotEdit({ userSpot }) {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
+                    {errors.price && <p>{errors.price}</p>}
                 </section>
-                <section>
+                {/* <section>
                     <h2>Liven up your spot with photos</h2>
                     <div>Submit a link to at least one photo to publish your spot.</div>
                     <input
@@ -121,7 +147,7 @@ export default function SpotEdit({ userSpot }) {
                         type='text'
                         placeholder='Image URL'
                     />
-                </section>
+                </section> */}
                 <button type="submit">Update your Spot</button>
             </form>
       </>

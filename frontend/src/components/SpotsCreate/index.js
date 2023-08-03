@@ -18,6 +18,11 @@ export default function SpotCreate() {
     const [lat, setLat] = useState(1.1234)
     const [lng, setLng] = useState(-1.1234)
     const [errors, setErrors] = useState({});
+    const [img1, setImg1] = useState('')
+    const [img2, setImg2] = useState('')
+    const [img3, setImg3] = useState('')
+    const [img4, setImg4] = useState('')
+    const [img5, setImg5] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -31,15 +36,18 @@ export default function SpotCreate() {
         if (name.length >= 50) validationErrors.name = 'Name must be less than 50 characters'
         if (!price) validationErrors.price = 'Please provide a valid price'
         if (!description) validationErrors.description = 'Please provide a valid description'
-        if (description.length > 30) validationErrors.description = 'Description needs 30 or more characters'
+        if (description.length < 30) validationErrors.description = 'Description needs 30 or more characters'
+        if (!img1) validationErrors.img1 = 'Please provide a valid image url'
 
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors)
         }
 
         const spot = { address, city, state, country, lat, lng, name, description, price }
+        const imgArray = [img1, img2, img3, img4, img5].filter(img => img)
+
         try {
-            const newSpot = await dispatch(createSpot(spot, user))
+            const newSpot = await dispatch(createSpot(spot, user, imgArray))
             history.push(`/spots/${newSpot.id}`)
         } catch (error) {
             console.error('Error creating spot:', error)
@@ -91,6 +99,7 @@ export default function SpotCreate() {
                             onChange={(e) => setState(e.target.value)}
                         />
                     </label>
+                    {errors.state && <p>{errors.state}</p>}
                 </section>
                 <section>
                     <h2>Describe your place to guests</h2>
@@ -130,22 +139,33 @@ export default function SpotCreate() {
                     <input
                         type='text'
                         placeholder='Preview Image URL'
+                        value={img1}
+                        onChange={(e) => setImg1(e.target.value)}
+                    />
+                    {errors.img1 && <p>{errors.img1}</p>}
+                    <input
+                        type='text'
+                        placeholder='Image URL'
+                        value={img2}
+                        onChange={(e) => setImg2(e.target.value)}
                     />
                     <input
                         type='text'
                         placeholder='Image URL'
+                        value={img3}
+                        onChange={(e) => setImg3(e.target.value)}
                     />
                     <input
                         type='text'
                         placeholder='Image URL'
+                        value={img4}
+                        onChange={(e) => setImg4(e.target.value)}
                     />
                     <input
                         type='text'
                         placeholder='Image URL'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Image URL'
+                        value={img5}
+                        onChange={(e) => setImg5(e.target.value)}
                     />
                 </section>
                 <button type="submit">Create Spot</button>

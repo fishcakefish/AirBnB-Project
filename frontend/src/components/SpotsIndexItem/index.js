@@ -14,7 +14,6 @@ const SpotIndexItem = ({ spot }) => {
   const displayImage = spot.previewImages ? spot.previewImages : null
   let rating = spot.avgRating
   if (rating === 0) rating = 'New'
-  console.log(spot.previewImages)
 
   return (
     <>
