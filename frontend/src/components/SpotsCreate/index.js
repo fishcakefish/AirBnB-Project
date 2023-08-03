@@ -17,12 +17,33 @@ export default function SpotCreate() {
     const [description, setDescription] = useState('')
     const [lat, setLat] = useState(1.1234)
     const [lng, setLng] = useState(-1.1234)
+    const [errors, setErrors] = useState({});
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let validationErrors = {}
+
+        if (!country) validationErrors.country = 'Please provide a valid country'
+        if (!address) validationErrors.address = 'Please provide a valid address'
+        if (!city) validationErrors.city = 'Please provide a valid city'
+        if (!state) validationErrors.state = 'Please provide a valid state'
+        if (!name) validationErrors.name = 'Please provide a valid name'
+        if (name.length >= 50) validationErrors.name = 'Name must be less than 50 characters'
+        if (!price) validationErrors.price = 'Please provide a valid price'
+        if (!description) validationErrors.description = 'Please provide a valid description'
+        if (description.length > 30) validationErrors.description = 'Description needs 30 or more characters'
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors)
+        }
+
         const spot = { address, city, state, country, lat, lng, name, description, price }
-        const newSpot = await dispatch(createSpot(spot, user))
-        history.push(`/spots/${newSpot.id}`)
+        try {
+            const newSpot = await dispatch(createSpot(spot, user))
+            history.push(`/spots/${newSpot.id}`)
+        } catch (error) {
+            console.error('Error creating spot:', error)
+        }
     }
     return (
         <>
@@ -40,6 +61,7 @@ export default function SpotCreate() {
                             onChange={(e) => setCountry(e.target.value)}
                         />
                     </label>
+                    {errors.country && <p>{errors.country}</p>}
                     <label>
                         Street Adress:
                         <input
@@ -49,6 +71,7 @@ export default function SpotCreate() {
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </label>
+                    {errors.address && <p>{errors.address}</p>}
                     <label>
                         City:
                         <input
@@ -58,6 +81,7 @@ export default function SpotCreate() {
                             onChange={(e) => setCity(e.target.value)}
                         />
                     </label>
+                    {errors.city && <p>{errors.city}</p>}
                     <label>
                         State:
                         <input
@@ -76,6 +100,7 @@ export default function SpotCreate() {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                     />
+                    {errors.description && <p>{errors.description}</p>}
                 </section>
                 <section>
                     <h2>Create a title for your spot</h2>
@@ -86,6 +111,7 @@ export default function SpotCreate() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
+                    {errors.name && <p>{errors.name}</p>}
                 </section>
                 <section>
                     <h2>Set a base price for your spot</h2>
@@ -96,6 +122,7 @@ export default function SpotCreate() {
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
+                    {errors.price && <p>{errors.price}</p>}
                 </section>
                 <section>
                     <h2>Liven up your spot with photos</h2>
