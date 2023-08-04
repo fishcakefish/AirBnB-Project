@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOT_REVIEWS = "reviews/GET_SPOT_REVIEW"
 const CREATE_REVIEW = "reviews/CREATE_REVIEW"
+const DELETE_REVIEW = "reviews/DELETE_REVIEW"
 
 const getSpotReviews = (reviews, spotId) => ({
     type: GET_SPOT_REVIEWS,
@@ -16,6 +17,12 @@ const createReview = (review, spotId, user) => ({
     user
 })
 
+const deleteReview = (reviewId, spotId) => ({
+    type: DELETE_REVIEW,
+    reviewId,
+    spotId
+})
+
 export const obtainSpotReviews = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "GET"
@@ -25,10 +32,10 @@ export const obtainSpotReviews = (spotId) => async (dispatch) => {
     return reviewData
 }
 
-export const makeReview = (review, spotId, user) => async (dispatch) => {
+export const makeReview = (reviewData, spotId, user) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: "POST",
-        body: JSON.stringify(review)
+        body: JSON.stringify(reviewData)
     })
     const newReview = await response.json()
     newReview.User = { id: user.id, firstName: user.firstName, lastName: user.lastName }
@@ -38,31 +45,45 @@ export const makeReview = (review, spotId, user) => async (dispatch) => {
     return newReview
 }
 
+export const destroyReview = (reviewId, spotId) => async (dispatch) => {
+    await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: "DELETE"
+    })
+
+    dispatch(deleteReview(reviewId, spotId))
+    return reviewId
+}
+
 const initialState = { spot: {}, user: {} }
 
 export default function reviewsReducer(state = initialState, action) {
     let reviewState
     switch (action.type) {
         case GET_SPOT_REVIEWS:
-            reviewState = { ...state, spot: { ...state.spot } }
+            reviewState = { ...state, spot: { } }
             reviewState.spot[action.spotId] = {}
             action.reviews.forEach(review => {
                 reviewState.spot[action.spotId][review.id] = review
             })
             return reviewState
         case CREATE_REVIEW:
+            reviewState = { ...state, spot: { ...state.spot } }
+            if (!reviewState.spot[action.spotId]) {
+                reviewState.spot[action.spotId] = {}
+            }
+            reviewState.spot[action.spotId][action.review.id] = action.review
+            reviewState.user[action.user.id] = {
+                ...reviewState.user[action.user.id],
+                [action.review.id]: {
+                    reviewData: action.review,
+                    User: action.user,
+                    Spot: action.spotId
+                }
+            }
+            return reviewState
+        case DELETE_REVIEW:
             reviewState = { ...state }
-            const reviewId = action.review.id
-            reviewState.spot[reviewId] = {
-                reviewData: action.review,
-                User: action.user,
-                ReviewImages: action.review.ReviewImages
-            }
-            reviewState.user[reviewId] = {
-                reviewData: action.review,
-                User: action.user,
-                Spot: action.spotId
-            }
+            delete reviewState.spot[action.spotId][action.reviewId]
             return reviewState
         default:
             return state

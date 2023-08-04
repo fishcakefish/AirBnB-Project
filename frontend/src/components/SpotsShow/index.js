@@ -6,6 +6,7 @@ import './SpotsShow.css'
 import ReviewCreate from '../ReviewsCreate/ReviewsCreate';
 import { makeReview, obtainSpotReviews } from '../../store/reviews';
 import { FaStar } from 'react-icons/fa'
+import ReviewDelete from '../ReviewsDelete/ReviewsDelete';
 
 const SpotShow = () => {
   const { spotId } = useParams();
@@ -15,6 +16,7 @@ const SpotShow = () => {
   const dispatch = useDispatch()
   const reviews = useSelector(state => state.reviews.spot[spotId])
   const { spot, avgStarRating, numReviews } = chosenSpot
+  const user = useSelector(state => state.session.user)
 
   const alerting = () => {
     alert("Feature coming soon")
@@ -59,7 +61,7 @@ const SpotShow = () => {
             </div>
             <div className="callout">
               <div className="callout-header">${spot?.price} night</div>
-              <div><FaStar />{chosenSpot.avgStarRating}, {chosenSpot.numReviews} Review(s)</div>
+              <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
               <div className="callout-container">
                 <button onClick={alerting}>Reserve</button>
               </div>
@@ -84,6 +86,7 @@ const SpotShow = () => {
               <div>(first & last name) {review.User.firstName} - {review.User.lastName}</div>
               <div>(month year) {month} {year}</div>
               <div>(review) {review.review}</div>
+              <div>{review.userId === user.id ? <ReviewDelete /> : ''}</div>
             </div>
           })}</div>
         </section>

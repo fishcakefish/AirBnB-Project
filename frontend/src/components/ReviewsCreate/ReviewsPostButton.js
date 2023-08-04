@@ -13,7 +13,12 @@ export default function ReviewsPostButton({spotId}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await dispatch(makeReview(review, spotId, rating))
+        let reviewData = {}
+        console.log('hi')
+        reviewData.review = review
+        reviewData.stars = rating
+        console.log('heelo')
+        await dispatch(makeReview(reviewData, spotId, rating))
         closeModal()
     }
 
