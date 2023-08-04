@@ -1,0 +1,7 @@
+.rating-input {
+    display: flex;
+}
+
+.empty {
+    opacity: 0.3;
+}

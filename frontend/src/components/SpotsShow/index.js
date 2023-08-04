@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { chooseSpot } from '../../store/spots';
 import './SpotsShow.css'
+import ReviewCreate from '../ReviewsCreate/ReviewsCreate';
+import { makeReview, obtainSpotReviews } from '../../store/reviews';
+import { FaStar } from 'react-icons/fa'
 
 const SpotShow = () => {
   const { spotId } = useParams();
@@ -10,11 +13,8 @@ const SpotShow = () => {
   const [goToSpot, setGoToSpot] = useState(spotId);
   const chosenSpot = useSelector(state => state.spots.singleSpot); // populate from Redux store
   const dispatch = useDispatch()
-
-  // const { city, state, country, description } = spot.spot
-  // const { firstName, lastName } = spot.spot.User
-
-  const { spot } = chosenSpot
+  const reviews = useSelector(state => state.reviews.spot[spotId])
+  const { spot, avgStarRating, numReviews } = chosenSpot
 
   const alerting = () => {
     alert("Feature coming soon")
@@ -25,6 +25,18 @@ const SpotShow = () => {
       dispatch(chooseSpot(spotId))
     }
   }, [dispatch])
+
+  useEffect(() => {
+    if (!reviews) {
+      dispatch(obtainSpotReviews(spotId))
+    }
+  }, [dispatch])
+
+  if (!reviews) return null
+
+  let reviewsArr = Object.values(reviews)
+  let sortedReviews = [...reviewsArr].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  console.log(sortedReviews)
 
   return (
     <section>
@@ -47,6 +59,7 @@ const SpotShow = () => {
             </div>
             <div className="callout">
               <div className="callout-header">${spot?.price} night</div>
+              <div><FaStar />{chosenSpot.avgStarRating}, {chosenSpot.numReviews} Review(s)</div>
               <div className="callout-container">
                 <button onClick={alerting}>Reserve</button>
               </div>
@@ -60,26 +73,21 @@ const SpotShow = () => {
             <td>Paragraph: {spot?.description}</td>
           </tr>
         </tbody>
+        <ReviewCreate spotId={spotId}/>
+        <section>
+          <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
+          <div>{sortedReviews.map((review) => {
+            const date = new Date(review.createdAt)
+            const month = date.toLocaleString('default', { month: 'long' })
+            const year = date.getFullYear()
+            return <div key={review.id}>
+              <div>(first & last name) {review.User.firstName} - {review.User.lastName}</div>
+              <div>(month year) {month} {year}</div>
+              <div>(review) {review.review}</div>
+            </div>
+          })}</div>
+        </section>
       </table>
-      {/* <div className="footer">
-        <Link
-          className="back-button"
-          to="/"
-        >
-          Back to Report Index
-        </Link>
-        <form className="go-to-report-form" onSubmit={handleSubmit}>
-          Go to Report #
-          <input
-            type="number"
-            min={1}
-            max={99}
-            value={goToReport}
-            onChange={(e) => setGoToReport(e.target.value)}
-            required
-          />
-        </form>
-      </div> */}
     </section>
   );
 };

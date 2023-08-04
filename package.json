@@ -10,6 +10,7 @@
     "build": "npm run build --prefix backend"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "react-icons": "^4.10.1"
   }
 }

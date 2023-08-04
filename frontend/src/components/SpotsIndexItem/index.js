@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { removeSpot } from '../../store/spots';
 import "./SpotsIndexItem.css";
+import { FaStar } from 'react-icons/fa'
 
 const SpotIndexItem = ({ spot }) => {
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ const SpotIndexItem = ({ spot }) => {
             <div>{spot.city}, {spot.state}</div>
             {/* <div>Rating: {spot.avgRating}</div> */}
           </div>
-          <div>Rating: {rating}</div>
+          <div>Rating: <FaStar />{rating}</div>
           <div>${spot.price} night</div>
         </div>
       </Link>
