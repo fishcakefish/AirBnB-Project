@@ -25,7 +25,6 @@ const SpotIndexItem = ({ spot }) => {
             <div className='star'><FaStar />{rating}</div>
           </div>
           <div>${spot.price} night</div>
-          <div>{console.log(displayImage[0])}</div>
         </div>
       </Link>
       {/* <button onClick={handleDelete}>delete {spot.id}</button> */}

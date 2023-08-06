@@ -21,7 +21,7 @@ export default function SpotCurrentItem({ spot }) {
     <>
         <div className="spots-items-container">
             <Link to={`/spots/${spot.id}`}>
-                <img src={displayImage} className='circular-image'/>
+                <img src={displayImage[0]} className='circular-image'/>
                 <div className="title-rating">
                     <div>{spot.city}, {spot.state}</div>
                 </div>

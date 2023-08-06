@@ -1,8 +1,9 @@
 import React from "react";
 import { useDispatch } from 'react-redux';
 import { useModal } from "../../context/Modal";
+import { destroyReview } from "../../store/reviews";
 
-export default function ReviewDelete() {
+export default function ReviewDelete({spotId, reviewId}) {
     const dispatch = useDispatch()
     const { closeModal } = useModal()
 
@@ -11,6 +12,7 @@ export default function ReviewDelete() {
     }
 
     const onClick = (e) => {
+        dispatch(destroyReview(reviewId, spotId))
         closeModal()
         refreshPage()
     }
