@@ -91,6 +91,7 @@ const SpotShow = () => {
           {spot?.ownerId !== user.id && Object.keys(reviews).length === 0
           ? (
             <div>
+              <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
               <div>Be the first to post a review!</div>
               <div><ReviewCreate spotId={spotId}/></div>
             </div>
