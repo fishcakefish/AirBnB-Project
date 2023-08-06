@@ -18,7 +18,8 @@ const SpotShow = () => {
   const reviews = useSelector(state => state.reviews.spot[spotId])
   const { spot, numReviews } = chosenSpot
   let { avgStarRating } = chosenSpot
-  const user = useSelector(state => state.session.user)
+  let user = useSelector(state => state.session.user)
+  if (!user) user = 0
 
   function lessThanOneDecimal(num) {
     const parts = num.toString().split('.')
