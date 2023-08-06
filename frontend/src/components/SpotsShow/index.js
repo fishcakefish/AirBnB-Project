@@ -88,7 +88,14 @@ const SpotShow = () => {
           </tr>
         </tbody>
         <section>
-          {spot?.ownerId !== user.id && Object.keys(reviews).length === 0 ? "Be the first to post a review!" : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews} spotId={spotId} spot={spot}/>}
+          {spot?.ownerId !== user.id && Object.keys(reviews).length === 0
+          ? (
+            <div>
+              <div>Be the first to post a review!</div>
+              <div><ReviewCreate spotId={spotId}/></div>
+            </div>
+          )
+          : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews} spotId={spotId} spot={spot}/>}
         </section>
       </table>
     </section>
