@@ -17,15 +17,15 @@ const SpotIndexItem = ({ spot }) => {
 
   return (
     <>
-      <Link to={`/spots/${spot.id}`}>
+      <Link className="no-underline" to={`/spots/${spot.id}`}>
         <div className="spots-items-container">
-          <img src={displayImage} />
+          <img className="circular-image" src={displayImage[0]} />
           <div className="title-rating">
             <div>{spot.city}, {spot.state}</div>
-            {/* <div>Rating: {spot.avgRating}</div> */}
+            <div className='star'><FaStar />{rating}</div>
           </div>
-          <div>Rating: <FaStar />{rating}</div>
           <div>${spot.price} night</div>
+          <div>{console.log(displayImage[0])}</div>
         </div>
       </Link>
       {/* <button onClick={handleDelete}>delete {spot.id}</button> */}

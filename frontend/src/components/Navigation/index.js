@@ -25,7 +25,6 @@ function Navigation({ isLoaded }){
                     </ul>
                 </div>
             </div>
-            <div className='body'>line</div>
         </div>
     </>
   );

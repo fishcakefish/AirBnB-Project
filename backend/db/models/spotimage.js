@@ -26,3 +26,21 @@ module.exports = (sequelize, DataTypes) => {
   });
   return SpotImage;
 };
+
+//add autoincrement id to this model
+// SpotImage.init({
+//   id: {
+//     allowNull: false,
+//     autoIncrement: true,
+//     primaryKey: true,
+//     type: DataTypes.INTEGER
+//   },
+//   spotId: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false,
+//   },
+//   url: {
+//     type: DataTypes.TEXT,
+//     allowNull: false,
+
+//   },

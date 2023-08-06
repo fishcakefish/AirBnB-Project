@@ -1,4 +1,11 @@
 /* TODO Add site wide styles */
 .name-and-logo-container {
-    display: flex
+    display: flex;
 }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;  /* ensure they take full width */
+    height: 100%; /* if you also want them to take full height */
+  }

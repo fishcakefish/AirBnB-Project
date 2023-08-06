@@ -1,5 +1,28 @@
+import React from "react";
+import { useDispatch } from 'react-redux';
+import { useModal } from "../../context/Modal";
+
 export default function ReviewDelete() {
+    const dispatch = useDispatch()
+    const { closeModal } = useModal()
+
+    function refreshPage() {
+        window.location.reload(false)
+    }
+
+    const onClick = (e) => {
+        closeModal()
+        refreshPage()
+    }
+
     return (
-        <button>Delete</button>
+        <div className="reviews-delete-container">
+            <h2>Confirm Delete</h2>
+            <h5>Are you sure you want to delete this review?</h5>
+            <div className="choose-destiny-2-container">
+                <button onClick={onClick} className="yes-butt">Yes (Delete Review)</button>
+                <button onClick={closeModal} className="no-butt">No (Keep Review)</button>
+            </div>
+        </div>
     )
 }

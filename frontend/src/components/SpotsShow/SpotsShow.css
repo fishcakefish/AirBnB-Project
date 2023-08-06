@@ -12,6 +12,11 @@
     justify-content: space-between
 }
 
+.stuffss-1 img{
+    width: 400px;
+    height: 400px;
+}
+
 .callout {
     position: fixed;
     bottom: 35px;

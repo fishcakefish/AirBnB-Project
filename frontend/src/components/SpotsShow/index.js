@@ -7,6 +7,7 @@ import ReviewCreate from '../ReviewsCreate/ReviewsCreate';
 import { makeReview, obtainSpotReviews } from '../../store/reviews';
 import { FaStar } from 'react-icons/fa'
 import ReviewDelete from '../ReviewsDelete/ReviewsDelete';
+import ReviewShow from './ReviewsShow';
 
 const SpotShow = () => {
   const { spotId } = useParams();
@@ -15,8 +16,16 @@ const SpotShow = () => {
   const chosenSpot = useSelector(state => state.spots.singleSpot); // populate from Redux store
   const dispatch = useDispatch()
   const reviews = useSelector(state => state.reviews.spot[spotId])
-  const { spot, avgStarRating, numReviews } = chosenSpot
+  const { spot, numReviews } = chosenSpot
+  let { avgStarRating } = chosenSpot
   const user = useSelector(state => state.session.user)
+
+  function lessThanOneDecimal(num) {
+    const parts = num.toString().split('.')
+    return parts.length === 1 || (parts.length === 2 && parts[1].length <= 1)
+  }
+
+  if (avgStarRating) if (!lessThanOneDecimal(avgStarRating)) avgStarRating = avgStarRating.toFixed(2)
 
   const alerting = () => {
     alert("Feature coming soon")
@@ -35,17 +44,17 @@ const SpotShow = () => {
   }, [dispatch])
 
   if (!reviews) return null
+  if (!spot) return null
 
   let reviewsArr = Object.values(reviews)
   let sortedReviews = [...reviewsArr].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  console.log(sortedReviews)
 
   return (
     <section>
       <table className="spot-table">
         <thead>
           <tr>
-            <th colSpan="2">Spot #{spotId}, {spot?.name}</th>
+            <th colSpan="2"><h1>Spot #{spotId}, {spot?.name}</h1></th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +63,8 @@ const SpotShow = () => {
             <td className="value">Location: {spot?.city}, {spot?.state}, {spot?.country}</td>
           </tr>
           <div className='stuffss'>
+            <div className='stuffss-1'>
+              <img src={spot?.SpotImages[0].url} /></div>
             <div>
               {spot?.SpotImages.map((image) => (
                 <img src={image.url}/>
@@ -77,18 +88,7 @@ const SpotShow = () => {
         </tbody>
         <ReviewCreate spotId={spotId}/>
         <section>
-          <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
-          <div>{sortedReviews.map((review) => {
-            const date = new Date(review.createdAt)
-            const month = date.toLocaleString('default', { month: 'long' })
-            const year = date.getFullYear()
-            return <div key={review.id}>
-              <div>(first & last name) {review.User.firstName} - {review.User.lastName}</div>
-              <div>(month year) {month} {year}</div>
-              <div>(review) {review.review}</div>
-              <div>{review.userId === user.id ? <ReviewDelete /> : ''}</div>
-            </div>
-          })}</div>
+          {spot?.ownerId !== user.id && Object.keys(reviews).length === 0 ? "Be the first to post a review!" : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews}/>}
         </section>
       </table>
     </section>

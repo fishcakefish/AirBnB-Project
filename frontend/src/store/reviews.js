@@ -24,7 +24,7 @@ const deleteReview = (reviewId, spotId) => ({
 })
 
 export const obtainSpotReviews = (spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    const response = await fetch(`/api/spots/${spotId}/reviews`, {
         method: "GET"
     })
     const reviewData = await response.json()
