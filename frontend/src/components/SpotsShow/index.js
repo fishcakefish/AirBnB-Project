@@ -89,13 +89,14 @@ const SpotShow = () => {
         </tbody>
         <section>
           {spot?.ownerId !== user.id && Object.keys(reviews).length === 0
-          ? (
+          ? (user === 0 ? <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div> :
+          (
             <div>
               <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
               <div>Be the first to post a review!</div>
               <div><ReviewCreate spotId={spotId}/></div>
             </div>
-          )
+          ))
           : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews} spotId={spotId} spot={spot}/>}
         </section>
       </table>
