@@ -46,8 +46,10 @@ export default function SpotEdit({ userSpot }) {
     }
     return (
         <>
+        <div className='create-spot-container'>
             <h1>Update your Spot</h1>
             <form onSubmit={handleSubmit}>
+            <div className='create-spot-sub'>
                 <section>
                     <h2>Where's your place located?</h2>
                     <div>Guests will only get your exact address once they booked a reservation.</div>
@@ -124,32 +126,10 @@ export default function SpotEdit({ userSpot }) {
                     />
                     {errors.price && <p>{errors.price}</p>}
                 </section>
-                {/* <section>
-                    <h2>Liven up your spot with photos</h2>
-                    <div>Submit a link to at least one photo to publish your spot.</div>
-                    <input
-                        type='text'
-                        placeholder='Preview Image URL'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Image URL'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Image URL'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Image URL'
-                    />
-                    <input
-                        type='text'
-                        placeholder='Image URL'
-                    />
-                </section> */}
+                </div>
                 <button type="submit">Update your Spot</button>
             </form>
+        </div>
       </>
     )
 }

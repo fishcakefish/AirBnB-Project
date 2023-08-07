@@ -1,0 +1,29 @@
+.create-spot-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-spot-container h1 {
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+}
+
+.create-spot-sub {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-spot-sub section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.create-spot-sub p {
+    color: red;
+}
+
+.create-spot-sub h2 + div {
+    font-size: large;
+}

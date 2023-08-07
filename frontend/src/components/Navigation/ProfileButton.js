@@ -47,8 +47,8 @@ function ProfileButton({ user }) {
   return (
     <>
       <div className="ggg">
-      <NavLink exact to='/spots/create'>{user && <button className="spot-create-butt">Create new Spot</button>}</NavLink>
-      <button onClick={openMenu}>
+      <NavLink exact to='/spots/create'>{user && <button className="spot-create-butt2">Create new Spot</button>}</NavLink>
+      <button onClick={openMenu} className="user-icon-butt">
         <i className="fas fa-user-circle" />
       </button>
       </div>

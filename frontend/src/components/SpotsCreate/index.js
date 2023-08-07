@@ -56,8 +56,10 @@ export default function SpotCreate() {
     //test
     return (
         <>
+        <div className='create-spot-container'>
             <h1>Create a New Spot</h1>
             <form onSubmit={handleSubmit}>
+                <div className='create-spot-sub'>
                 <section>
                     <h2>Where's your place located?</h2>
                     <div>Guests will only get your exact address once they booked a reservation.</div>
@@ -169,8 +171,10 @@ export default function SpotCreate() {
                         onChange={(e) => setImg5(e.target.value)}
                     />
                 </section>
+                </div>
                 <button type="submit">Create Spot</button>
             </form>
+        </div>
       </>
     )
 }

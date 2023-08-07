@@ -5,3 +5,8 @@
     font-size: 30px;
     text-align: center;
 }
+
+.h2h2 {
+    display: flex;
+    justify-content: center;
+}

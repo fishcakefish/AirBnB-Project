@@ -1,17 +1,37 @@
 .ggg {
     display: flex;
-    gap: 50px;
+    gap: 20px;
 }
 
-.spot-create-butt.active {
-    padding: 3px 10px;
+.spot-create-butt2 {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: larger;
+    border: none;
+    background-color: white;
 }
 
-.spot-create-butt:hover {
-    background-color: greenyellow;
+.spot-create-butt2:hover {
+    cursor: pointer;
+    background-color:whitesmoke;
 }
 
 .spot-create-butt:active {
     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     transform: translateY(2px);
+}
+
+.user-icon-butt {
+    width: 60px;
+    border-radius: 60px;
+    background: transparent;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    font-size: 2em;
+    margin-right: 10px;
+}
+
+.user-icon-butt:hover {
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }

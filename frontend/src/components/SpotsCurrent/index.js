@@ -30,7 +30,7 @@ export default function SpotCurrent() {
 
     return (
         <>
-            <h2>Manage Spots</h2>
+            <h2 className='h2h2'>Manage Spots</h2>
             <div className='spot-container'>
                 {spots?.map((spot) => (
                 <SpotCurrentItem

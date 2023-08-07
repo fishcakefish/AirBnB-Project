@@ -8,7 +8,7 @@
 
 .profile-dropdown:not(.no-user) {
     position: absolute;
-    top: 65%;
+    top: 75%;
     right: 0;
     z-index: 1000;
     background-color: whitesmoke;
@@ -20,14 +20,18 @@
 
 .profile-dropdown.no-user {
     position: absolute;
-    top: 0;
-    right: 40;
+    top: 80%;
+    right: 10;
     z-index: 1000;
     background-color: whitesmoke;
     border: solid black 2px;
     border-radius: 5px;
     margin: 5px;
     height: 45px;
+}
+
+.profile-dropdown:hover {
+    cursor: pointer;
 }
 
 .header {
