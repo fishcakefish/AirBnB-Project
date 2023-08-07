@@ -27,3 +27,12 @@
 .create-spot-sub h2 + div {
     font-size: large;
 }
+
+.create-spot-sub input {
+    max-width: 400px;
+}
+
+.create-spot-sub textarea {
+    max-width: 400px;
+    height: 70px;
+}
