@@ -72,10 +72,6 @@
     background: lightgrey;
     /* display: flex;
     flex-direction: column; */
-    border: solid 3px;
-    position: fixed;
-    bottom: 230px;
-    right: 300px;
 }
 
 /* Callout header */

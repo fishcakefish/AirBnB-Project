@@ -26,7 +26,7 @@ export default function ReviewShow({ user, reviews, avgStarRating, numReviews, s
                     {review.userId === user.id && reviewId &&
                         <OpenModalButton className="openModelButt"
                             buttonText='Delete'
-                            modalComponent={<ReviewDelete spotId={spotId} reviewId={reviewId}/>}
+                            modalComponent={<ReviewDelete spotId={spotId} reviewId={reviewId} reviews={reviews}/>}
                         />
                     }
                 </div>

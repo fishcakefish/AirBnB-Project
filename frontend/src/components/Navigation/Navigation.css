@@ -6,7 +6,20 @@
     display: none;
 }
 
+.profile-dropdown {
+    position: absolute;
+    top: 65%;
+    right: 0;
+    z-index: 1000;
+    background-color: whitesmoke;
+    border: solid black 2px;
+    border-radius: 25px;
+    margin: 5px;
+    height: 120px;
+}
+
 .header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     box-shadow: 0 2px 6px -2px grey;

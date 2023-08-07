@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from "../../context/Modal";
 import { removeSpot } from "../../store/spots";
 import './DeleteButton.css'
@@ -8,14 +8,9 @@ export default function DeleteButton({spotId}) {
     const dispatch = useDispatch();
     const { closeModal } = useModal()
 
-    function refreshPage() {
-        window.location.reload(false);
-    }
-
     const onClick = (e) => {
         dispatch(removeSpot(spotId))
         closeModal()
-        refreshPage()
     }
 
     return (

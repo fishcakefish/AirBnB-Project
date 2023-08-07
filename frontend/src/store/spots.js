@@ -65,7 +65,6 @@ export const createSpot = (spot, user, imgArray) => async(dispatch) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(spot)
     })
-    console.log(imgArray)
 
     if (response.ok) {
         if (!user) throw new Error('Please log in to create a spot')
@@ -97,7 +96,7 @@ export const removeSpot = (spotId) => async(dispatch) => {
     })
 
     if (response.ok) {
-        const spotId = await response.json()
+        await response.json()
         dispatch(deleteSpot(spotId))
         return spotId
     }
@@ -144,12 +143,6 @@ export default function spotsReducer(state = initialState, action) {
             spotsState = { ...state, allSpots: {}, singleSpot: {} }
             spotsState.singleSpot = action.spot
             return spotsState
-        // case GET_USER_SPOTS:
-        //     spotsState = { ...state, allSpots: {}, singleSpot: {} }
-        //     action.spots.forEach((spot) => {
-        //         spotsState.allSpots[spot.id] = spot
-        //     })
-        //     return spotsState
         case CREATE_SPOT:
             spotsState = { ...state, allSpots: { ...state.allSpots }, singleSpot: { ...action.spot } }
             spotsState.allSpots[action.spot.id] = action.spot

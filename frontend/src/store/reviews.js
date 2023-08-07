@@ -41,16 +41,13 @@ export const makeReview = (reviewData, spotId, user) => async (dispatch) => {
     newReview.User = { id: user.id, firstName: user.firstName, lastName: user.lastName }
     newReview.ReviewImages = []
     dispatch(createReview(newReview, spotId, user))
-    console.log('success!')
     return newReview
 }
 
 export const destroyReview = (reviewId, spotId) => async (dispatch) => {
-    console.log('lo')
     const response = await csrfFetch(`/api/reviews/${reviewId}`, {
         method: "DELETE"
     })
-    console.log('llo')
     const data = await response.json()
     dispatch(deleteReview(reviewId, spotId))
     return reviewId
@@ -85,11 +82,7 @@ export default function reviewsReducer(state = initialState, action) {
             return reviewState
         case DELETE_REVIEW:
             reviewState = { ...state, spot: { ...state.spot } }
-            console.log(reviewState)
-            console.log('ello')
             delete reviewState.spot[action.spotId][action.reviewId]
-            console.log(reviewState)
-            console.log('hello')
             return reviewState
         default:
             return state

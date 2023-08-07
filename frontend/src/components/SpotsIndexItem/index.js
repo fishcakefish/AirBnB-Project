@@ -5,11 +5,6 @@ import { FaStar } from 'react-icons/fa'
 
 const SpotIndexItem = ({ spot }) => {
   const dispatch = useDispatch()
-  // const handleDelete = (e) => {
-  //   e.preventDefault();
-  //   dispatch(removeSpot(spot.id))
-  //   console.log('did')
-  // };
 
   const displayImage = spot.previewImages ? spot.previewImages : null
   let rating = spot.avgRating
@@ -18,7 +13,7 @@ const SpotIndexItem = ({ spot }) => {
   return (
     <>
       <Link className="no-underline" to={`/spots/${spot.id}`}>
-        <div className="spots-items-container">
+        <div className="spots-items-container" title={spot.name}>
           <img className="circular-image" src={displayImage[0]} />
           <div className="title-rating">
             <div>{spot.city}, {spot.state}</div>
@@ -33,7 +28,3 @@ const SpotIndexItem = ({ spot }) => {
 };
 
 export default SpotIndexItem;
-
-      {/* <div className="buttons-container">
-        <button onClick={handleDelete}>Delete</button>
-      </div> */}

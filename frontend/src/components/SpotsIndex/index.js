@@ -5,10 +5,8 @@ import { writeSpots } from '../../store/spots';
 import SpotIndexItem from '../SpotsIndexItem';
 
 function SpotIndex({ isLoaded }){
-  // const sessionUser = useSelector(state => state.session.user);
   const dispatch = useDispatch()
   const spots = useSelector(state => Object.values(state.spots.allSpots))
-  // console.log(spots[1].previewImages[0])
 
   useEffect(() => {
     dispatch(writeSpots())

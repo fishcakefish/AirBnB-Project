@@ -47,7 +47,7 @@ function ProfileButton({ user }) {
   return (
     <>
       <div className="ggg">
-      <NavLink exact to='/spots/create'>{user && <button>Create new Spot</button>}</NavLink>
+      <NavLink exact to='/spots/create'>{user && <button className="spot-create-butt">Create new Spot</button>}</NavLink>
       <button onClick={openMenu}>
         <i className="fas fa-user-circle" />
       </button>
@@ -55,16 +55,16 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
+            <div>Hello, {user.firstName}</div>
+            <div>{user.username}</div>
+            <div>{user.firstName} {user.lastName}</div>
+            <div>{user.email}</div>
+            <div>
               <NavLink to='/spots/current'><button>Manage Spots</button></NavLink>
-            </li>
-            <li>
+            </div>
+            <div>
               <button onClick={logout}>Log Out</button>
-            </li>
+            </div>
           </>
         ) : (
           <>

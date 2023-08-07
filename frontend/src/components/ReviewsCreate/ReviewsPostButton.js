@@ -14,12 +14,11 @@ export default function ReviewsPostButton({spotId}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         let reviewData = {}
-        console.log('hi')
         reviewData.review = review
         reviewData.stars = rating
-        console.log('heelo')
-        await dispatch(makeReview(reviewData, spotId, rating))
+        dispatch(makeReview(reviewData, spotId, rating))
         closeModal()
+        window.location.reload()
     }
 
     const onChange = (number) => {
