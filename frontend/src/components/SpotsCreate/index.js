@@ -53,6 +53,7 @@ export default function SpotCreate() {
             console.error('Error creating spot:', error)
         }
     }
+    //test
     return (
         <>
             <h1>Create a New Spot</h1>
