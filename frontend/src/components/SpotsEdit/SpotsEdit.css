@@ -36,3 +36,17 @@
     max-width: 400px;
     height: 70px;
 }
+
+.submit-booton {
+    border: solid 1px;
+    border-radius: 25px;
+    background-color: white;
+    width: 200px;
+    height: 70px;
+    font-size: 2em;
+    margin: 20px
+}
+
+.submit-booton:hover {
+    background-color: whitesmoke;
+}

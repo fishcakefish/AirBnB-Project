@@ -127,7 +127,7 @@ export default function SpotEdit({ userSpot }) {
                     {errors.price && <p>{errors.price}</p>}
                 </section>
                 </div>
-                <button type="submit">Update your Spot</button>
+                <button type="submit" className='submit-booton'>Update your Spot</button>
             </form>
         </div>
       </>

@@ -172,7 +172,7 @@ export default function SpotCreate() {
                     />
                 </section>
                 </div>
-                <button type="submit">Create Spot</button>
+                <button type="submit" className='submit-booton'>Create Spot</button>
             </form>
         </div>
       </>
