@@ -14,7 +14,7 @@ const SpotIndexItem = ({ spot }) => {
     <>
       <Link className="no-underline" to={`/spots/${spot.id}`}>
         <div className="spots-items-container" title={spot.name}>
-          <img className="circular-image" src={displayImage[0]} />
+          <img className="circular-image" src={displayImage[displayImage.length - 1]} />
           <div className="title-rating">
             <div>{spot.city}, {spot.state}</div>
             <div className='star'><FaStar />{rating}</div>
