@@ -52,17 +52,15 @@ const SpotShow = () => {
 
   return (
     <section>
-      <table className="spot-table">
-        <thead>
-          <tr>
-            <th colSpan="2"><h1>Spot #{spotId}, {spot?.name}</h1></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {/* <td className="attribute">Location:</td> */}
-            <td className="value">Location: {spot?.city}, {spot?.state}, {spot?.country}</td>
-          </tr>
+      <div className="spot-table">
+        <div>
+          <div>
+            <div className="show-header"><h1>{spot?.name}</h1></div>
+          </div>
+        </div>
+          <div>
+            <div className="header-stuff"><FaStar />{avgStarRating === 0 ? "New" + " · " : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews") + " ·"} {spot?.city}, {spot?.state}, {spot?.country}</div>
+          </div>
           <div className="parent-flex-container">
             <div className='stuffss-1'>
               <img className="circular-image" src={spot?.SpotImages[0].url} />
@@ -80,27 +78,28 @@ const SpotShow = () => {
                 <button onClick={alerting}>Reserve</button>
               </div>
             </div>
-          <tr>
-            {/* <td className="attribute">Hosted By:</td> */}
-            <td className="value">Hosted By: {spot?.User.firstName}, {spot?.User.lastName}</td>
-          </tr>
-          <tr>
-            <td>Paragraph: {spot?.description}</td>
-          </tr>
-        </tbody>
-        <section>
-          {spot?.ownerId !== user.id && Object.keys(reviews).length === 0
-          ? (user === 0 ? <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div> :
-          (
-            <div>
-              <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
-              <div>Be the first to post a review!</div>
-              <div><ReviewCreate spotId={spotId}/></div>
+            <div className='under-image-container'>
+              <div>
+                {/* <td className="attribute">Hosted By:</td> */}
+                <div className="under-image-text">Hosted By: {spot?.User.firstName}, {spot?.User.lastName}</div>
+              </div>
+              <div>
+                <div className='under-image-text-2'>{spot?.description}</div>
+              </div>
             </div>
-          ))
-          : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews} spotId={spotId} spot={spot}/>}
-        </section>
-      </table>
+            <section>
+              {spot?.ownerId !== user.id && Object.keys(reviews).length === 0
+              ? (user === 0 ? <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div> :
+              (
+                <div>
+                <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
+                <div>Be the first to post a review!</div>
+                <div><ReviewCreate spotId={spotId}/></div>
+              </div>
+              ))
+              : <ReviewShow avgStarRating={avgStarRating} reviews={reviews} user={user} numReviews={numReviews} spotId={spotId} spot={spot}/>}
+            </section>
+          </div>
     </section>
   );
 };

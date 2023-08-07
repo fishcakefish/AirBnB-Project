@@ -17,10 +17,33 @@
     height: 400px;
 }
 
+.show-header {
+    display: flex;
+    height: 100px;
+}
+
+.show-header h1 {
+    font-size: 40px;
+}
+
+.under-image-text {
+    font-size: 30px;
+}
+
+.under-image-text-2 {
+    font-size: 20px;
+}
+
 .mapped-images-container {
     display: flex;
     flex-wrap: wrap;
-    max-width: 450px
+    max-width: 450px;
+    gap: 2px;
+}
+
+.header-stuff {
+    display: flex;
+    height: 30px;
 }
 
 .callout {
