@@ -7,14 +7,20 @@
     display: flex
 } */
 
-.stuffss {
+.parent-flex-container {
     display: flex;
-    justify-content: space-between
+    gap: 2px;
 }
 
 .stuffss-1 img{
     width: 400px;
     height: 400px;
+}
+
+.mapped-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 450px
 }
 
 .callout {

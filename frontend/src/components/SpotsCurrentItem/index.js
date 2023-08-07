@@ -4,6 +4,7 @@ import OpenModalButton from '../OpenModalButton';
 import React, { useState } from 'react'
 import "./SpotsCurrentItem.css";
 import DeleteButton from './DeleteButton';
+import { FaStar } from 'react-icons/fa';
 
 export default function SpotCurrentItem({ spot }) {
   const dispatch = useDispatch()
@@ -21,17 +22,19 @@ export default function SpotCurrentItem({ spot }) {
     <>
         <div className="spots-items-container">
             <Link to={`/spots/${spot.id}`}>
-                <img src={displayImage[0]} className='circular-image'/>
-                <div className="title-rating">
-                    <div>{spot.city}, {spot.state}</div>
+                <div className="spots-items-container">
+                    <img className="circular-image" src={displayImage[0]} />
+                    <div className="title-rating">
+                        <div>{spot.city}, {spot.state}</div>
+                        <div className='star'><FaStar />{rating}</div>
+                    </div>
+                    <div className='button-container'>
+                        <Link to={`/spots/edit/${spot.id}`}><button>Update</button></Link>
+                        <OpenModalButton buttonText='Delete' modalComponent={<DeleteButton spotId={spot.id}/>}/>
+                    </div>
+                    <div>${spot.price} night</div>
                 </div>
-                <div>Rating: {rating}</div>
-                <div>${spot.price} night</div>
             </Link>
-            <div className='button-container'>
-                <Link to={`/spots/edit/${spot.id}`}><button>Update</button></Link>
-                <OpenModalButton buttonText='Delete' modalComponent={<DeleteButton spotId={spot.id}/>}/>
-            </div>
         </div>
     </>
   );

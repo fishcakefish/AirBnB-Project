@@ -63,13 +63,15 @@ const SpotShow = () => {
             {/* <td className="attribute">Location:</td> */}
             <td className="value">Location: {spot?.city}, {spot?.state}, {spot?.country}</td>
           </tr>
-          <div className='stuffss'>
+          <div className="parent-flex-container">
             <div className='stuffss-1'>
-              <img src={spot?.SpotImages[0].url} /></div>
-            <div>
-              {spot?.SpotImages.map((image) => (
-                <img src={image.url}/>
-              ))}
+              <img className="circular-image" src={spot?.SpotImages[0].url} />
+            </div>
+            <div className="mapped-images-container">
+              {spot?.SpotImages.filter((image, index) => index !== 0).map((image, index) => (
+                <img key={index} src={image.url} className="circular-image" />
+                ))}
+            </div>
             </div>
             <div className="callout">
               <div className="callout-header">${spot?.price} night</div>
@@ -78,7 +80,6 @@ const SpotShow = () => {
                 <button onClick={alerting}>Reserve</button>
               </div>
             </div>
-          </div>
           <tr>
             {/* <td className="attribute">Hosted By:</td> */}
             <td className="value">Hosted By: {spot?.User.firstName}, {spot?.User.lastName}</td>
