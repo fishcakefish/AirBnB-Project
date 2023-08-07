@@ -13,24 +13,26 @@ export default function ReviewShow({ user, reviews, avgStarRating, numReviews, s
         <>
             <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
             <div>{user && reviewCheck === 0 ? (spot.ownerId !== user.id ? <ReviewCreate spotId={spotId}/> : '') : ''}</div>
-            <div>{sortedReviews.map((review) => {
-            const date = new Date(review.createdAt)
-            const month = date.toLocaleString('default', { month: 'long' })
-            const year = date.getFullYear()
-            return <div key={review.id}>
-              <div>(first & last name) {review.User.firstName} - {review.User.lastName}</div>
-              <div>(month year) {month} {year}</div>
-              <div>(review) {review.review}</div>
-              <div>
-                {review.userId === user.id && reviewId &&
-                    <OpenModalButton
-                        buttonText='Delete'
-                        modalComponent={<ReviewDelete spotId={spotId} reviewId={reviewId}/>}
-                    />
-                }
-              </div>
+            <div className={`reviews-container ${sortedReviews.length > 0 ? 'active' : ''}`}>
+                <div>{sortedReviews.map((review) => {
+                const date = new Date(review.createdAt)
+                const month = date.toLocaleString('default', { month: 'long' })
+                const year = date.getFullYear()
+                return <div className="reviews-specific" key={review.id}>
+                <div>{review.User.firstName} - {review.User.lastName}</div>
+                <div>{month} {year}</div>
+                <div>{review.review}</div>
+                <div>
+                    {review.userId === user.id && reviewId &&
+                        <OpenModalButton className="openModelButt"
+                            buttonText='Delete'
+                            modalComponent={<ReviewDelete spotId={spotId} reviewId={reviewId}/>}
+                        />
+                    }
+                </div>
+                </div>
+                })}</div>
             </div>
-            })}</div>
         </>
     )
 }

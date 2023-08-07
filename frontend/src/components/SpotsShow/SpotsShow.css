@@ -26,6 +26,10 @@
     font-size: 40px;
 }
 
+.under-image-container {
+    max-width: 400px;
+}
+
 .under-image-text {
     font-size: 30px;
 }
@@ -44,6 +48,17 @@
 .header-stuff {
     display: flex;
     height: 30px;
+}
+
+.reviews-container.active {
+    width: 400px;
+}
+
+.reviews-specific {
+    border: solid 2px;
+    border-radius: 5px;
+    margin: 3px;
+    padding-left: 5px;
 }
 
 .callout {
