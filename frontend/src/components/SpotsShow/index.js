@@ -71,20 +71,24 @@ const SpotShow = () => {
                 ))}
             </div>
             </div>
-            <div className="callout">
-              <div className="callout-header">${spot?.price} night</div>
-              <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
-              <div className="callout-container">
-                <button onClick={alerting}>Reserve</button>
+            <div className='under-image-flex'>
+              <div className='under-image-container'>
+                <div>
+                  {/* <td className="attribute">Hosted By:</td> */}
+                  <div className="under-image-text">Hosted By: {spot?.User.firstName}, {spot?.User.lastName}</div>
+                </div>
+                <div>
+                  <div className='under-image-text-2'>{spot?.description}</div>
+                </div>
               </div>
-            </div>
-            <div className='under-image-container'>
-              <div>
-                {/* <td className="attribute">Hosted By:</td> */}
-                <div className="under-image-text">Hosted By: {spot?.User.firstName}, {spot?.User.lastName}</div>
-              </div>
-              <div>
-                <div className='under-image-text-2'>{spot?.description}</div>
+              <div className="callout">
+                <div className='callout-header'>
+                  <div className="callout-header-title">${spot?.price} night</div>
+                  <div><FaStar />{avgStarRating === 0 ? "New" : (avgStarRating % 1 === 0 ? avgStarRating.toFixed(1) : avgStarRating) + " · " + (numReviews === 1 ? "1 Review" : numReviews + " Reviews")}</div>
+                </div>
+                <div className="callout-container">
+                  <button onClick={alerting}>Reserve</button>
+                </div>
               </div>
             </div>
             <section>

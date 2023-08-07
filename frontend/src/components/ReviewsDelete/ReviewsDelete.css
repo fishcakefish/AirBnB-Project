@@ -1,0 +1,17 @@
+.reviews-delete-container {
+    border: solid cyan 4px;
+}
+
+.reviews-delete-container h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.reviews-delete-container h5 {
+    display: flex;
+    justify-content: center;
+}
+
+.choose-destiny-2-container {
+    margin: 5px;
+}

@@ -27,7 +27,7 @@
 }
 
 .under-image-container {
-    max-width: 400px;
+    width: 400px;
 }
 
 .under-image-text {
@@ -61,28 +61,43 @@
     padding-left: 5px;
 }
 
+.under-image-flex {
+    display: flex;
+}
+
 .callout {
+    margin-left: 50px;
+    margin-top: 10px;
+    width: 300px;
+    background: lightgrey;
+    /* display: flex;
+    flex-direction: column; */
+    border: solid 3px;
     position: fixed;
-    bottom: 35px;
-    right: 20px;
-    margin-left: 20px;
-    max-width: 300px;
-    background: gray
+    bottom: 230px;
+    right: 300px;
 }
 
 /* Callout header */
 .callout-header {
-    padding: 25px 15px;
+    padding: 10px 15px;
     /* background: #555; */
-    font-size: 30px;
-    color: white;
+    font-size: 20px;
+    color: black;
 }
 
 /* Callout container/body */
+
 .callout-container {
-    padding: 15px;
-    /* background-color: #ccc; */
-    color: black;
     display: flex;
     justify-content: center;
+    margin-bottom: 10px;
+}
+.callout-container button{
+    padding: 3px;
+    /* background-color: #ccc; */
+    color: black;
+    /* display: flex;
+    justify-content: center; */
+    font-size: 25px;
 }

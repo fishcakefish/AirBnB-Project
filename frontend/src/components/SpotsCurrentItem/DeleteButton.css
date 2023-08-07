@@ -5,3 +5,21 @@
 .no-butt {
     background-color: darkgrey;
 }
+
+.delete-button-container {
+    border: solid cyan 4px;
+}
+
+.delete-button-container h2 {
+    display: flex;
+    justify-content: center;
+}
+
+.delete-button-container h5 {
+    display: flex;
+    justify-content: center;
+}
+
+.choose-destiny-container {
+    margin: 5px;
+}
