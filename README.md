@@ -1,6 +1,6 @@
 https://fishbn2b-project.onrender.com/
 
-FishBn2B is an (attempted) clone of the website AirBnB, with my own style, gimmicks & beginner coding ability, using React Redux for my frontend. It features the usage of CRUD (Create, Read, Update and Destroy) through "spots"; this platform being used to rent or rent out places for a short period of time. Authentication & User data is also another big feature.
+FishBn2B is an (attempted) clone of the website AirBnB, with my own style, gimmicks & beginner coding ability, using React Redux for my frontend. It features the usage of CRUD (Create, Read, Update and Destroy) through "spots"; this platform being used to rent or rent out places for a short period of time. Authentication & User data is also another big feature. This is my very first coding project 
 
 Technologies Used:
     - React
